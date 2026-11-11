@@ -1,0 +1,40 @@
+name: structmamba_seg
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.10
+  - pip
+  - pytorch
+  - torchvision
+  - torchaudio
+  - numpy<2
+  - scipy
+  - pillow
+  - pyyaml
+  - tqdm
+  - ninja
+  - cmake
+  - git
+  - matplotlib
+
+  - pip:
+      - openmim
+      - mmengine
+      - mmsegmentation
+      - timm
+      - opencv-python
+      - prettytable
+      - einops
+      - ftfy
+      - regex
+      - tensorboard
+      - cityscapesscripts
+      - yacs
+
+# After creating the environment, install the CUDA-matched MMCV build with:
+#   conda activate structmamba_seg
+#   mim install mmcv

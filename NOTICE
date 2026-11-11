@@ -1,0 +1,21 @@
+StructMamba-Seg
+Copyright (c) 2026 [Your Name / Your Team]
+
+This repository contains the implementation of StructMamba-Seg for semantic segmentation.
+
+This codebase is built upon the DefMamba / DeformableMamba project and further extends it for semantic segmentation research and paper reproduction.
+
+The main additions and modifications in this repository include:
+- StructMamba-Seg for semantic segmentation
+- boundary-context guided structural modeling components
+- semantic segmentation configs, training, testing, and evaluation pipeline
+- boundary and structure-sensitive evaluation tools
+- project reorganization for paper-oriented release
+
+This repository also benefits from the broader open-source ecosystem acknowledged by the upstream project, including segmentation and Mamba-related codebases.
+
+Please retain the original attribution and license notices when redistributing or modifying derived code.
+
+For license details, please refer to:
+- LICENSE
+- the original upstream repository and its license statement

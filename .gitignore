@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+*.dll
+
+# Build / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Virtual env
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+runs/
+wandb/
+
+# Caches
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# Data
+data/
+
+# Outputs
+work_dirs/
+outputs/
+results/
+vis/
+
+# Numpy / pickle
+*.npy
+*.npz
+*.pkl
+
+# Checkpoints
+checkpoints/*
+!checkpoints/.gitkeep
+!checkpoints/README.md
+
+# Torch / model files
+*.pth
+*.pt
+*.ckpt
+
+# Temporary scripts or local notes
+*.tmp
+*.bak
