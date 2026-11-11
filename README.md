@@ -11,49 +11,75 @@ Scan-based visual state space models, especially Mamba-based methods, have shown
 ## Overview
 
 - Overall Framework
+
 <p align="center">
   <img src="./assets/framework.svg" width="900" />
 </p>
 
 - BCG State Space Model
+
 <p align="center">
   <img src="./assets/bcg_ssm.svg" width="900" />
 </p>
 
 - Qualitative Comparison
+
 <p align="center">
   <img src="./assets/qualitative_cityscapes.svg" width="900" />
 </p>
 
 ## Main Results
 
-### **Semantic Segmentation on ADE20K**
+### Semantic Segmentation on ADE20K
 
-| Model | Input | #Params | FLOPs | Segmentor | mIoU(SS) | mIoU(MS) |
-|:-----:|:-----:|:-------:|:-----:|:---------:|:--------:|:--------:|
-| StructMamba-Seg | 512×512 | 68.2M | 483G | UPerNet@160k | 50.2 | 51.1 |
+StructMamba-Seg achieves strong performance on the ADE20K validation set under both single-scale (SS) and multi-scale (MS) evaluation.
 
-### **Semantic Segmentation on Cityscapes**
+| Model | Input | Segmentor | Schedule | mIoU (SS) | mIoU (MS) |
+|:------|:-----:|:---------:|:--------:|:---------:|:---------:|
+| **StructMamba-Seg** | 512×512 | UPerNet | 160k | **50.2** | **51.1** |
 
-| Model | Train Crop | Eval Resolution | #Params | FLOPs | Segmentor | mIoU |
-|:-----:|:----------:|:---------------:|:-------:|:-----:|:---------:|:----:|
-| StructMamba-Seg | 512×1024 | 2048×1024 | 68.2M | 1920G | UPerNet@120k | 82.12 |
+### Semantic Segmentation on Cityscapes
 
-### **Semantic Segmentation on Pascal Context**
+On Cityscapes, StructMamba-Seg achieves **82.12% mIoU**, demonstrating strong segmentation performance in complex urban scenes with thin structures, small objects, and ambiguous boundaries.
 
-| Model | Input | Segmentor | Setting |
-|:-----:|:-----:|:---------:|:-------:|
-| StructMamba-Seg | 512×512 | UPerNet@80k | 59-class |
+| Model | Train Crop | Evaluation | Segmentor | Schedule | mIoU |
+|:------|:----------:|:----------:|:---------:|:--------:|:----:|
+| **StructMamba-Seg** | 512×1024 | Single-Scale | UPerNet | 120k | **82.12** |
 
-> Pascal Context support is included in the public release. Final reported numbers and released checkpoints can be updated after the paper and model release are finalized.
+### Ablation Study
+
+All ablation experiments are conducted on Cityscapes.
+
+| BCG | IBJO | mIoU |
+|:---:|:----:|:----:|
+| ✗ | ✗ | 79.88 |
+| ✗ | ✓ | 80.96 |
+| ✓ | ✗ | 81.38 |
+| ✓ | ✓ | **82.12** |
+
+Individually, BCG and IBJO improve the baseline by **1.50** and **1.08** mIoU, respectively. Combining BCG and IBJO achieves **82.12% mIoU**, yielding an overall improvement of **2.24 mIoU** over the baseline.
+
+### Boundary and Structure-Sensitive Evaluation
+
+To further evaluate performance on boundaries, fine structures, and challenging categories, we report four structure-sensitive metrics on Cityscapes: Boundary IoU, Boundary F1, Hard-class mIoU, and Small-class mIoU.
+
+| IBJO | BCG | Boundary IoU | Boundary F1 | Hard-class mIoU | Small-class mIoU |
+|:----:|:---:|:------------:|:-----------:|:---------------:|:----------------:|
+| ✗ | ✗ | 60.32 | 74.38 | 72.12 | 73.86 |
+| ✓ | ✗ | 61.68 | 75.47 | 73.76 | 75.31 |
+| ✗ | ✓ | 62.25 | 75.97 | 73.88 | 75.36 |
+| ✓ | ✓ | **62.67** | **76.27** | **75.31** | **76.67** |
+
+Compared with the baseline, the full StructMamba-Seg model improves Boundary IoU by **2.35**, Boundary F1 by **1.89**, Hard-class mIoU by **3.19**, and Small-class mIoU by **2.81**.
+
+Boundary metrics are evaluated at a resolution of **2048×1024** with a boundary width ratio of **0.005**.
 
 ## Supported Scope
 
-The **paper experiments** reported in StructMamba-Seg are conducted on the following three benchmarks only:
+The main experiments reported in the StructMamba-Seg paper are conducted on:
 
 - **Cityscapes**
 - **ADE20K**
-- **Pascal Context**
 
 At the **repository level**, the public codebase currently includes dataset configs, base dataset definitions, or tool support for the following segmentation datasets:
 
@@ -82,8 +108,7 @@ At the **repository level**, the public codebase currently includes dataset conf
 
 In addition, the repository also includes multiple dataset-specific variants for some benchmarks, such as different input-resolution settings for **Cityscapes**, **ADE20K**, **NYU**, and **LEVIR-CD**.
 
-Please note that **repository-level support does not mean that all supported datasets are included in the paper’s main experimental tables**. The official results reported in the paper are restricted to **Cityscapes, ADE20K, and Pascal Context**, while the remaining datasets are included as extended configuration and tooling support in the public release.
-
+Please note that **repository-level support does not mean that all supported datasets are included in the paper’s main experimental tables**. The official results reported in the paper are restricted to **Cityscapes and ADE20K**, while the remaining datasets are included as extended configuration and tooling support in the public release.
 
 ## Getting Started
 
@@ -137,7 +162,7 @@ pip install mmsegmentation==1.2.2
 
 ### Training
 
-To train StructMamba-Seg on the paper benchmarks:
+To train StructMamba-Seg on the supported benchmarks:
 
 **Cityscapes**
 ```bash
@@ -205,7 +230,8 @@ The officially documented paper benchmarks are:
 
 - Cityscapes
 - ADE20K
-- Pascal Context
+
+Additional repository-level configuration and training support is provided for Pascal Context and several other segmentation datasets.
 
 ## Project Structure
 
